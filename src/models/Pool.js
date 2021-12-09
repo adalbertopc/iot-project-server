@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import SensorData from "./SensorData";
 
 const poolSchema = new Schema({
   owner: {
@@ -18,30 +19,17 @@ const poolSchema = new Schema({
   image: {
     type: String,
   },
-  specs: {
-    width: {
-      type: Number,
-      required: true,
-    },
-    length: {
-      type: Number,
-      required: true,
-    },
-    depth: {
-      type: Number,
-      required: true,
-    },
-    capacity: {
-      type: Number,
-      required: true,
-    },
+  volumen: {
+    type: Number,
+    required: true,
   },
-  sensorDataHistory: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "SensorData",
-    },
-  ],
+  sensorID: {
+    type: String,
+    required: true,
+  },
+  sensorDataHistory: {
+    type: [SensorData.schema],
+  },
   addedAt: {
     type: Date,
     default: Date.now,

@@ -1,9 +1,13 @@
 import { Schema, model } from "mongoose";
 
 const sensorDataSchema = new Schema({
-  collectedAt: {
+  date: {
     type: Date,
     default: Date.now,
+  },
+  ph: {
+    type: Number,
+    required: true,
   },
 });
 

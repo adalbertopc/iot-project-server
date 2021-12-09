@@ -3,9 +3,11 @@ import { resolvers } from "./resolvers";
 
 const typeDefs = `
     type Query {
-        hello: String
-        allUsers: [User]
-        allPools: [Pool]
+        users: [User]
+        user(id:String): User
+        pools: [Pool]
+        pool(id: ID!): Pool
+        token(token:String): Boolean
     }
 
     type User {
@@ -15,6 +17,7 @@ const typeDefs = `
         email: String!
         password: String!
         pools: [Pool]
+        token: String
     }
 
     type Pool {
@@ -23,20 +26,23 @@ const typeDefs = `
         name: String!
         description: String
         location: String
-        specs: Specs!
+        volumen: Int!
+        sensorDataHistory: [SensorData]
         image: String
     }
 
-    type Specs {
-        width: Int!
-        length: Int!
-        depth: Int!
-        capacity: Int!
+    type SensorData {
+        date: String
+        ph: Float
     }
+    
 
     type Mutation {
-        createUser(input: UserInput): User
         createPool(input: PoolInput): Pool
+        RegisterUser(input: UserInput): User
+        LoginUser(email: String!, password: String!): User
+        updateUser(input: UserInput): User
+        updatePool(input: PoolInput): Pool
     }
 
     input UserInput {
@@ -51,16 +57,11 @@ const typeDefs = `
         name: String!
         description: String
         location: String
-        specs: SpecsInput!
+        volumen: Int!
+        sensorID: String!
         image: String
     }
 
-    input SpecsInput {
-        width: Int!
-        length: Int!
-        depth: Int!
-        capacity: Int!
-    }
 `;
 
 export default makeExecutableSchema({ typeDefs, resolvers });
